@@ -1,23 +1,24 @@
 const dataList = document.getElementById("data-list");
 const heartContainer = document.getElementById("heart-container");
 
-// ランダムな温度と湿度データを生成する関数
-function generateDummyData() {
-    return {
-        timestamp: new Date().toLocaleTimeString(),
-        temperature: (20 + Math.random() * 10).toFixed(1), // 20〜30度
-        humidity: (40 + Math.random() * 20).toFixed(1)     // 40〜60%
-    };
-}
+const emotions = ["happy", "sad", "angry", "surprise", "disgust"];
+const symbols = {
+    "happy": "❤️",
+    "sad": "💦",
+    "angry": "🔥",
+    "surprise": "❗",
+    "disgust": "⚠️"
+};
+let emotionIndex = 0;  // 感情のインデックス
 
-// データを表示し、更新のたびにハートを出す関数
-function displayData() {
-    // 新しいデータを生成
-    const data = generateDummyData();
+// 感情を順に表示し、対応する絵文字を表示する関数
+function displayEmotion() {
+    const emotion = emotions[emotionIndex];
+    const symbol = symbols[emotion];
 
     // リストアイテムを作成し表示
     const listItem = document.createElement("li");
-    listItem.textContent = `時間: ${data.timestamp}, 温度: ${data.temperature}°C, 湿度: ${data.humidity}%`;
+    listItem.textContent = `if a baby feels: ${emotion}`;
     dataList.prepend(listItem);
 
     // 最大5件のデータのみ表示
@@ -25,29 +26,32 @@ function displayData() {
         dataList.removeChild(dataList.lastChild);
     }
 
-    // ハートをたくさん出現させる
-    for (let i = 0; i < 10; i++) { // ハートを10個出す
-        createHeart();
+    // 現在の感情に応じた絵文字をたくさん出現させる
+    for (let i = 0; i < 10; i++) { // 10個の絵文字を出す
+        createSymbol(symbol);
     }
+
+    // 次の感情に移動
+    emotionIndex = (emotionIndex + 1) % emotions.length;  // インデックスを循環させる
 }
 
-// ハートを生成する関数
-function createHeart() {
-    const heart = document.createElement("div");
-    heart.classList.add("heart");
-    heart.innerText = "❤️";
-    heart.style.left = Math.random() * 100 + "vw"; // ランダムな水平位置
-    heart.style.animationDuration = Math.random() * 2 + 3 + "s"; // ランダムな上昇速度
-    heartContainer.appendChild(heart);
+// 絵文字を生成する関数
+function createSymbol(symbol) {
+    const emoji = document.createElement("div");
+    emoji.classList.add("symbol");
+    emoji.innerText = symbol;
+    emoji.style.left = Math.random() * 100 + "vw"; // ランダムな水平位置
+    emoji.style.animationDuration = Math.random() * 2 + 3 + "s"; // ランダムな上昇速度
+    heartContainer.appendChild(emoji);
 
     // アニメーションが終わったら削除
     setTimeout(() => {
-        heart.remove();
+        emoji.remove();
     }, 5000); // 5秒後に削除
 }
 
-// 5秒ごとにデータを更新
-setInterval(displayData, 5000);
+// 5秒ごとに感情を更新
+setInterval(displayEmotion, 5000);
 
-// 初回データ表示
-displayData();
+// 初回表示
+displayEmotion();
