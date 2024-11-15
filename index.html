@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emotion Viewer</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Emotion Viewer</h1>
+    <div id="controls">
+        <select id="emotion-selector">
+            <option value="happy">Happy</option>
+            <option value="sad">Sad</option>
+            <option value="angry">Angry</option>
+            <option value="surprise">Surprise</option>
+            <option value="neutral">Neutral</option>
+        </select>
+        <button onclick="displayEmotion()">Show Reaction</button>
+    </div>
+    <div id="reaction-container"></div>
+    <script src="script.js"></script>
+</body>
+</html>
